@@ -83,37 +83,54 @@ University_RD <- slice(University_RD, 1:(n()-6))
 # View tibble to check that rows were removed
 University_RD
 
-# -------- Summarize data by state and source of funds -------
+# Reorder columns so earliest year is on left
+University_RD <- University_RD %>%
+  select(state:source_of_funds, year_2010, year_2011, year_2012, year_2013, 
+         year_2014, year_2015, year_2016, year_2017, year_2018)
 
-# Trying to do this: https://stackoverflow.com/questions/21607464/what-is-the-equivalent-of-the-sumif-function-in-r 
+# View tibble to check that columns were reordered
+University_RD
 
-# These don't work:
-University_RD %>%
+
+# ----------------------------------- Analyses -------------------------------------
+# ----------------------------------------------------------------------------------
+
+# -------- Analysis 1: Total higher ed R&D spend by state -------
+
+# Show total R&D spend, all states plus DC
+total_RD_all_states <- University_RD %>%
   group_by(state) %>%
-  summarize(s2018 = sum('2018'), s2017 = sum('2017'))
+  filter(!state %in% c("American Samoa", "Guam", "Puerto Rico", 
+                       "Virgin Islands")) %>%
+  filter(institution_name == "Total") %>%
+  filter(source_of_funds == "Total") %>%
+  summarize(sum2010 = sum(year_2010), sum2011 = sum(year_2011), 
+            sum2012 = sum(year_2012), sum2013 = sum(year_2013),
+            sum2014 = sum(year_2014), sum2015 = sum(year_2015),
+            sum2016 = sum(year_2016), sum2017 = sum(year_2017),
+            sum2018 = sum(year_2018))
 
-University_RD %>%
-  group_by(state, source_of_funds) %>%
-  summarize(s2018 = sum('2018'), s2017 = sum('2017'))
+# View tibble
+total_RD_all_states
 
-# These create the right setup, but sum whole rows without regard to groups
-University_RD %>%
+
+# -------- Analysis 2: Business-funded higher ed R&D spend by state -------
+
+# Show business-funded R&D spend, all states plus DC
+business_RD_all_states <- University_RD %>%
   group_by(state) %>%
-  summarize(s2018 = sum(University_RD$'2018'), s2017 = sum(University_RD$'2017'))
+  filter(!state %in% c("American Samoa", "Guam", "Puerto Rico", 
+                       "Virgin Islands")) %>%
+  filter(source_of_funds == "Business") %>%
+  summarize(sum2010 = sum(year_2010), sum2011 = sum(year_2011), 
+            sum2012 = sum(year_2012), sum2013 = sum(year_2013),
+            sum2014 = sum(year_2014), sum2015 = sum(year_2015),
+            sum2016 = sum(year_2016), sum2017 = sum(year_2017),
+            sum2018 = sum(year_2018))
 
-University_RD %>%
-  group_by(state, source_of_funds) %>%
-  summarize(s2018 = sum(University_RD$'2018'), s2017 = sum(University_RD$'2017'))
+# View tibble
+business_RD_all_states
 
-# Relatedly...
-# This works
-sum(University_RD$'2018')
-
-# But this doesn't
-University_RD %>%
-  sum('2018')
-
-# What am I doing wrong here?
 
 # -----------------------------------------------------------------------------------
 # -----------------------------------------------------------------------------------
@@ -237,4 +254,28 @@ University_RD %>%
 
 sum(University_RD$'2018')
 
+
+# --------------------------------- Extra content ----------------------------------
+
+# Trying to do this: https://stackoverflow.com/questions/21607464/what-is-the-equivalent-of-the-sumif-function-in-r 
+
+# Code format to show total R&D funding by state (but do not use this because there
+# is a 'total' line included in the csv, so if you use this you will double count the
+# total)
+University_RD %>%
+  group_by(state) %>%
+  summarize(sum2018 = sum(year_2018), sum2017 = sum(year_2017), 
+            sum2016 = sum(year_2016), sum2015 = sum(year_2015),
+            sum2014 = sum(year_2014), sum2013 = sum(year_2013),
+            sum2012 = sum(year_2012), sum2011 = sum(year_2011),
+            sum2010 = sum(year_2010))
+
+
+# Relatedly...
+# This works
+sum(University_RD$'2018')
+
+# But this doesn't
+University_RD %>%
+  sum('2018')
 
