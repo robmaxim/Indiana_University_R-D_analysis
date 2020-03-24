@@ -21,15 +21,15 @@ University_RD <- University_RD %>%
     institution_name = X2,
     field = X3,
     source_of_funds = X4,
-    '2018' = X5,
-    '2017' = X6,
-    '2016' = X7,
-    '2015' = X8,
-    '2014' = X9,
-    '2013' = X10,
-    '2012' = X11,
-    '2011' = X12,
-    '2010' = X13
+    year_2018 = X5,
+    year_2017 = X6,
+    year_2016 = X7,
+    year_2015 = X8,
+    year_2014 = X9,
+    year_2013 = X10,
+    year_2012 = X11,
+    year_2011 = X12,
+    year_2010 = X13
     )
 
 # View tibble to check that the renames worked on the correct row
@@ -50,29 +50,29 @@ University_RD <- University_RD %>%
 University_RD
 
 # Remove commas from numbers
-University_RD$'2018' <- gsub(',', '', University_RD$'2018')
-University_RD$'2017' <- gsub(',', '', University_RD$'2017')
-University_RD$'2016' <- gsub(',', '', University_RD$'2016')
-University_RD$'2015' <- gsub(',', '', University_RD$'2015')
-University_RD$'2014' <- gsub(',', '', University_RD$'2014')
-University_RD$'2013' <- gsub(',', '', University_RD$'2013')
-University_RD$'2012' <- gsub(',', '', University_RD$'2012')
-University_RD$'2011' <- gsub(',', '', University_RD$'2011')
-University_RD$'2010' <- gsub(',', '', University_RD$'2010')
+University_RD$year_2018 <- gsub(',', '', University_RD$year_2018)
+University_RD$year_2017 <- gsub(',', '', University_RD$year_2017)
+University_RD$year_2016 <- gsub(',', '', University_RD$year_2016)
+University_RD$year_2015 <- gsub(',', '', University_RD$year_2015)
+University_RD$year_2014 <- gsub(',', '', University_RD$year_2014)
+University_RD$year_2013 <- gsub(',', '', University_RD$year_2013)
+University_RD$year_2012 <- gsub(',', '', University_RD$year_2012)
+University_RD$year_2011 <- gsub(',', '', University_RD$year_2011)
+University_RD$year_2010 <- gsub(',', '', University_RD$year_2010)
 
 # View tibble to check that commas were removed
 University_RD
 
 # Convert year columns to numeric type
-University_RD$'2018' <- as.numeric(as.character(University_RD$'2018'))
-University_RD$'2017' <- as.numeric(as.character(University_RD$'2017'))
-University_RD$'2016' <- as.numeric(as.character(University_RD$'2016'))
-University_RD$'2015' <- as.numeric(as.character(University_RD$'2015'))
-University_RD$'2014' <- as.numeric(as.character(University_RD$'2014'))
-University_RD$'2013' <- as.numeric(as.character(University_RD$'2013'))
-University_RD$'2012' <- as.numeric(as.character(University_RD$'2012'))
-University_RD$'2011' <- as.numeric(as.character(University_RD$'2011'))
-University_RD$'2010' <- as.numeric(as.character(University_RD$'2010'))
+University_RD$year_2018 <- as.numeric(as.character(University_RD$year_2018))
+University_RD$year_2017 <- as.numeric(as.character(University_RD$year_2017))
+University_RD$year_2016 <- as.numeric(as.character(University_RD$year_2016))
+University_RD$year_2015 <- as.numeric(as.character(University_RD$year_2015))
+University_RD$year_2014 <- as.numeric(as.character(University_RD$year_2014))
+University_RD$year_2013 <- as.numeric(as.character(University_RD$year_2013))
+University_RD$year_2012 <- as.numeric(as.character(University_RD$year_2012))
+University_RD$year_2011 <- as.numeric(as.character(University_RD$year_2011))
+University_RD$year_2010 <- as.numeric(as.character(University_RD$year_2010))
 
 # View tibble to check that number vectors are numeric
 University_RD
