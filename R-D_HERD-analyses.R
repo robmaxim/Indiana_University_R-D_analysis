@@ -160,8 +160,6 @@ total_RD_all_states <- University_RD %>%
 # View tibble
 total_RD_all_states
 
-write_csv(total_RD_all_states, "herd_total-adv-sector-RD.csv")
-
 
 # -------- Analysis 2: Business-funded higher ed R&D spend by state -------
 
@@ -217,6 +215,8 @@ total_adv_sector_RD_all_states <- University_RD %>%
 
 # View tibble
 total_adv_sector_RD_all_states
+
+write_csv(total_adv_sector_RD_all_states, "herd_total-adv-sector-RD.csv")
 
 
 # -------- Analysis 4: Business-funded advanced sector R&D spend by state --------
@@ -329,7 +329,9 @@ adv_GDPshare
 adv_GDPshare <- select(adv_GDPshare, -(t_adv_2010:gdp_2018))
 
 # View tibble to make sure columns were removed
-tot_GDPshare
+adv_GDPshare
+
+write_csv(adv_GDPshare, "herd_total-adv-sector-RD_GDP-share.csv")
 
 
 # ------- Analysis 7: Computer and information sciences (proxy for ICT only) research
@@ -389,6 +391,48 @@ ict_GDPshare <- select(ict_GDPshare, -(ict_2010:gdp_2018))
 
 # View tibble to make sure columns were removed
 ict_GDPshare
+
+write_csv(ict_GDPshare, "herd_total-ICT-RD_GDP-share.csv")
+
+
+# ------- Analysis 9: Business-funded advanced sector research as a share of stage GDP -------
+
+# Join tibble showing business-fundedadvanced sector R&D by state to tibble showing 
+# state GDP to get them in the same file
+biz_adv_sector_GDPshare <- left_join(x = biz_adv_sector_RD_all_states, y = BEA_GDP, 
+                                     by = "state")
+
+#View tibble to make sure join was successful
+biz_adv_sector_GDPshare
+
+# Multiply the GDP numbers by 1,000 (because they are in millions of dollars and the
+# R&D numbers are in thousands) and divide the R&D spend by GDP spend to get higher
+# ed GDP share
+biz_adv_sector_GDPshare <- biz_adv_sector_GDPshare %>%
+  mutate(
+    biz_adv_share_2010 = b_adv_2010/(gdp_2010 * 1000),
+    biz_adv_share_2011 = b_adv_2011/(gdp_2011 * 1000),
+    biz_adv_share_2012 = b_adv_2012/(gdp_2012 * 1000),
+    biz_adv_share_2013 = b_adv_2013/(gdp_2013 * 1000),
+    biz_adv_share_2014 = b_adv_2014/(gdp_2014 * 1000),
+    biz_adv_share_2015 = b_adv_2015/(gdp_2015 * 1000),
+    biz_adv_share_2016 = b_adv_2016/(gdp_2016 * 1000),
+    biz_adv_share_2017 = b_adv_2017/(gdp_2017 * 1000),
+    biz_adv_share_2018 = b_adv_2018/(gdp_2018 * 1000)
+  )
+
+#View tibble to make sure calculation was successful
+biz_adv_sector_GDPshare
+
+# Remove columns from tibbles that were joined together to show just higer ed R&D
+# share
+biz_adv_sector_GDPshare <- select(biz_adv_sector_GDPshare, -(b_adv_2010:gdp_2018))
+
+# View tibble to make sure columns were removed
+biz_adv_sector_GDPshare
+
+write_csv(biz_adv_sector_GDPshare, "herd_biz-adv-sector-RD_GDP-share.csv")
+
 
 
 
