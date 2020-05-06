@@ -160,6 +160,8 @@ total_RD_all_states <- University_RD %>%
 # View tibble
 total_RD_all_states
 
+write_csv(total_RD_all_states, "herd_total-adv-sector-RD.csv")
+
 
 # -------- Analysis 2: Business-funded higher ed R&D spend by state -------
 
@@ -254,6 +256,8 @@ biz_adv_sector_RD_all_states <- University_RD %>%
 # View tibble
 biz_adv_sector_RD_all_states
 
+write_csv(biz_adv_sector_RD_all_states, "herd_biz-funded-adv-sector-RD.csv")
+
 
 # -------- Analysis 5: Total higher ed R&D spend as a share of state GDP -------
 
@@ -346,6 +350,8 @@ ict_RD_all_states <- University_RD %>%
 
 # View tibble
 ict_RD_all_states
+
+write_csv(ict_RD_all_states, "herd_total-ICT-RD.csv")
 
 
 # ------- Analysis 8: Computer and information sciences (proxy for ICT only) research
